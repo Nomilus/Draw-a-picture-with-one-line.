@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Testing Path</title>
+    <style>
+        svg {
+            width: 100%;
+            height: 100vh;
+        }
+
+        html,
+        body {
+            overflow: hidden;
+        }
+    </style>
+    <script>
+        window.addEventListener("load", () => {
+            let index = 0;
+
+            let startX, startY;
+            let currentX, currentY;
+
+            document.addEventListener("click", (event) => createPath(event));
+
+            document.addEventListener("mousemove", (event) => {
+                currentX = event.clientX - 8;
+                currentY = event.clientY - 8;
+
+                const pathElement = document.getElementById(`position_${index - 1}`);
+                pathElement.setAttribute("d", `M ${startX} ${startY} L ${currentX} ${currentY}`);
+            });
+
+            function createPath(event) {
+                startX = event.clientX - 8;
+                startY = event.clientY - 8;
+                const newPath = document.createElementNS("http://www.w3.org/2000/svg", "path");
+                newPath.setAttribute("d", `M ${startX} ${startY} L ${currentX} ${currentY}`);
+                newPath.setAttribute("id", `position_${index}`);
+                newPath.setAttribute("stroke", "black");
+                newPath.setAttribute("fill", "transparent");
+                newPath.setAttribute("stroke-width", "2");
+                document.querySelector("svg").appendChild(newPath);
+                index++;
+            }
+        });
+    </script>
+</head>
+
+<body>
+    <svg></svg>
+</body>
+
+</html>
